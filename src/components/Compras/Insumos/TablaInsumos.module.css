@@ -252,6 +252,7 @@ input {
 .vinotinto {
     background: #48110d;
     color: white;
+    height: 40px;
 }
 
 .vinotinto:hover {

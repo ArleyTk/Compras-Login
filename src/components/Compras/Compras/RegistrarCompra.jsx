@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './registroCompras.css';
+
 import { Outlet, Link } from "react-router-dom";
 import { Table, Pagination } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import estilos from './registroCompras.module.css'
 
 function App() {
   const token = localStorage.getItem('token');
@@ -292,30 +293,30 @@ function App() {
     <div className='contenido-2' style={{ overflowX: 'hidden' }}>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
       <form onSubmit={(event) => handleSubmitCompra(event, compra.total_compra, precio)}>
-        <div className='contenido-' >
-          <div className='formulario'>
+        <div className={estilos.contenido} >
+          <div className={estilos.formulario}>
             <div>
-              <h1 id="titulo">Compras</h1>
+              <h1 id={estilos.titulo}>Compras</h1>
             </div>
             <br />
-            <div className='inputs-up'>
-              <div className='contenedor-input' >
+            <div className={estilos.inputsup}>
+              <div className={estilos.contenedorinput} >
                 <label  htmlFor="fechaCompra"> Fecha</label>
                 <input
                   id="fechaCompra"
                   name="fecha_compra"
-                  className="input-field"
+                  className={estilos.inputfield}
                   value={compra.fecha_compra}
                   onChange={handleInputChange}
                   type="date"
                 />
               </div>
-              <div className='contenedor-input'>
+              <div className={estilos.contenedorinput}>
                 <label style={{ marginLeft: "30px" }} htmlFor="numeroCompra"> Número</label>
                 <input
                   id="numeroCompra"
                   name="numero_compra"
-                  className="input-field3"
+                  className={estilos.inputfield3}
                   value={compra.nombre_compra}
                   onChange={handleInputChange}
                   type="number"
@@ -326,11 +327,11 @@ function App() {
             </div>
             <br />
             <div id="kaka">
-              <label htmlFor="proveedor"><i className="fa-solid fa-users iconosRojos select"></i> Proveedor </label>
+              <label htmlFor="proveedor"> Proveedor </label>
               <select
                 id="proveedor"
                 name="id_proveedor"
-                className="input-field2"
+                className={estilos.inputfield2}
                 value={compra.id_proveedor}
                 onChange={handleInputChange}>
                 <option value="">Seleccione un proveedor</option>
@@ -342,13 +343,13 @@ function App() {
               </select>
             </div>
             <br />
-            <div className='inputs-up'>
+            <div className={estilos.inputsup}>
               <div className='contenedor-input' >
-                <label  htmlFor="precioCompra"><i className="fa-sharp fa-solid fa-dollar-sign iconosRojos"></i> Total </label>
+                <label  htmlFor="precioCompra"> Total </label>
                 <input
                   id="precioCompra"
                   name="total_compra"
-                  className="input-field4"
+                  className={estilos.inputfield4}
                   value={precioTotal || ''}
                   onChange={handleInputChange}
                   type="number"
@@ -361,15 +362,15 @@ function App() {
                 />
               </div>
               <div className='contenedor-input'>
-                <button className='boton azulado2' type="button" onClick={addTableRow}><center>+ Insumo</center></button>
+                <button className={estilos.azulado2}  type="button" onClick={addTableRow}><center>+ Insumo</center></button>
               </div>
             </div>
             <br />
           </div>
           <hr style={{ margin: '10px 0', border: 'none', borderTop: '1px solid black' }} />
-          <div className='tabla-detalle' style={{ overflowY: scrollEnabled ? 'scroll' : 'auto', maxHeight: '390px' }}>
+          <div className={estilos.tabladetalle} style={{ overflowY: scrollEnabled ? 'scroll' : 'auto', maxHeight: '390px' }}>
             <table className="tablaDT ui celled table" style={{ width: "90%" }} ref={tableRef}>
-              <thead className="rojo thead-fixed">
+              <thead className={estilos.theadfixed}>
                 <tr>
                   <th style={{ textAlign: "center", backgroundColor: '#1F67B9', color: "white" }}><i className="fa-solid fa-font "></i > Nombre Insumo</th>
                   <th style={{ textAlign: "center", backgroundColor: '#1F67B9', color: "white" }}><i className="fa-solid fa-coins "></i> Precio</th>
@@ -381,7 +382,7 @@ function App() {
                 {tableRows.map((row, index) => (
                   <tr key={index}>
                     <td style={{ textAlign: "center" }}>
-                      <select className="input-field-tabla"  value={row.nombre} onChange={(e) => handleSelectChange(e, index)}>
+                      <select className={estilos.inputfieldtabla}  value={row.nombre} onChange={(e) => handleSelectChange(e, index)}>
                         <option value="">Seleccione un insumo</option>
                         {filteredInsumos.map((insumo) => (
                           <option key={insumo.id_insumo} value={insumo.nombre_insumo}>
@@ -390,11 +391,11 @@ function App() {
                         ))}
                       </select>
                     </td>
-                    <td  style={{ textAlign: "center" }}><input className="input-field-tabla" style={{ width: "100px" }} type="number" onChange={(e) => handlePrecioChange(e, index)} /></td>
-                    <td style={{ textAlign: "center" }}><input className="input-field-tabla" style={{ width: "100px" }} type="number" onChange={(e) => handleCantidadChange(e, index)} /></td>
+                    <td  style={{ textAlign: "center" }}><input className={estilos.inputfieldtabla} style={{ width: "100px" }} type="number" onChange={(e) => handlePrecioChange(e, index)} /></td>
+                    <td style={{ textAlign: "center" }}><input className={estilos.inputfieldtabla} style={{ width: "100px" }} type="number" onChange={(e) => handleCantidadChange(e, index)} /></td>
                     {index !== 0 && (
                     <td style={{ textAlign: "center" }}>
-                    <button className='bot-x' type="button" onClick={() => handleDeleteRow(index)}>X</button>
+                    <button className={estilos.botx} type="button" onClick={() => handleDeleteRow(index)}>X</button>
                   </td>
                   
                     )}
@@ -406,9 +407,9 @@ function App() {
         </div>
         <br />
         <br />
-        <div style={{ marginRight: "200px" }} className="cajaBotones">
-          <button type="submit" id="can" className="boton azulado3"><center>Guardar</center></button>
-          <button style={{color: "white"}} type="button" className="boton gris" onClick={handleCancel}>Cancelar</button>
+        <div style={{ marginRight: "200px" }} className={estilos.cajaBotones}>
+          <button type="submit"  className={estilos.azulado3}><center>Guardar</center></button>
+          <button style={{color: "white"}} type="button" className={estilos.gris} onClick={handleCancel}>Cancelar</button>
         </div>
       </form>
     </div>
