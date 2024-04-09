@@ -121,11 +121,11 @@ const Layout = () => {
                     <p id="luchosoft">LuchoSoft</p>
                 </div>
                 <div>
-                <Link to="/dashboard">
-                    <a className="usuario-link">
-                        <img src={(usuario.imagen_usuario != "" ? usuario.imagen_usuario : "")} alt="" />
-                    </a>
-                </Link>
+                    <Link to="/dashboard">
+                        <a className="usuario-link">
+                            <img src={(usuario.imagen_usuario != "" ? usuario.imagen_usuario : "")} alt="" />
+                        </a>
+                    </Link>
                 </div>
 
             </div>
@@ -167,22 +167,22 @@ const Layout = () => {
                                 <ul className={`options ${selectedModule === "Compras" ? "active" : ""}`}>
                                     {permisoCatInsumos && (
                                         <Link to="/CatInsumos">
-                                        <li>Categoria de insumos</li>
+                                            <li>Categoria de insumos</li>
                                         </Link>
                                     )}
                                     {permisoInsumos && (
                                         <Link to="/Insumos">
-                                        <li>Insumos</li>
+                                            <li>Insumos</li>
                                         </Link>
                                     )}
                                     {permisoProveedores && (
                                         <Link to="/Proveedores">
-                                        <li>Proveedores</li>
+                                            <li>Proveedores</li>
                                         </Link>
                                     )}
                                     {permisoCompras && (
                                         <Link to="/Compra">
-                                        <li>Compras</li>
+                                            <li>Compras</li>
                                         </Link>
                                     )}
                                 </ul>
@@ -194,7 +194,9 @@ const Layout = () => {
                                     Producción <i className="bi bi-chevron-down arrow-icon"></i>
                                 </p>
                                 <ul className={`options ${selectedModule === "Producción" ? "active" : ""}`}>
-                                    <li>Orden de producción</li>
+                                    <Link to="/ordenes_produccion">
+                                        <li>Orden de producción</li>
+                                    </Link>
                                 </ul>
                             </div>
                         )}
@@ -205,19 +207,29 @@ const Layout = () => {
                                 </p>
                                 <ul className={`options ${selectedModule === "Ventas" ? "active" : ""}`}>
                                     {permisoCatProductos && (
-                                        <li>Categoria de productos</li>
+                                        <Link to="/categoria_productos">
+                                            <li>Categoria de productos</li>
+                                        </Link>
                                     )}
                                     {permisoProductos && (
-                                        <li>Productos</li>
+                                        <Link to="/productos">
+                                            <li>Productos</li>
+                                        </Link>
                                     )}
                                     {permisoClientes && (
-                                        <li>Clientes</li>
+                                        <Link to="/clientes">
+                                            <li>Clientes</li>
+                                        </Link>
                                     )}
                                     {permisoPedidos && (
-                                        <li>Pedidos</li>
+                                        <Link to="/pedidos">
+                                            <li>Pedidos</li>
+                                        </Link>
                                     )}
                                     {permisoVentas && (
-                                        <li>Ventas</li>
+                                        <Link to="/ventas">
+                                            <li>Ventas</li>
+                                        </Link>
                                     )}
                                 </ul>
                             </div>

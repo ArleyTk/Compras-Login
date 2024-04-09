@@ -294,10 +294,12 @@ function App() {
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
       <form onSubmit={(event) => handleSubmitCompra(event, compra.total_compra, precio)}>
         <div className={estilos.contenido} >
-          <div className={estilos.formulario}>
-            <div>
+        <div>
               <h1 id={estilos.titulo}>Compras</h1>
             </div>
+
+          <div className={estilos.formulario}>
+
             <br />
             <div className={estilos.inputsup}>
               <div className={estilos.contenedorinput} >
@@ -326,7 +328,7 @@ function App() {
               </div>
             </div>
             <br />
-            <div id="kaka">
+            <div id="">
               <label htmlFor="proveedor"> Proveedor </label>
               <select
                 id="proveedor"
@@ -367,9 +369,9 @@ function App() {
             </div>
             <br />
           </div>
-          <hr style={{ margin: '10px 0', border: 'none', borderTop: '1px solid black' }} />
+          <hr style={{ margin: '10px 45px', borderTop: '1px solid black' }} />
           <div className={estilos.tabladetalle} style={{ overflowY: scrollEnabled ? 'scroll' : 'auto', maxHeight: '390px' }}>
-            <table className="tablaDT ui celled table" style={{ width: "90%" }} ref={tableRef}>
+            <table className="tablaDT ui celled table" style={{ width: "100%" }} ref={tableRef}>
               <thead className={estilos.theadfixed}>
                 <tr>
                   <th style={{ textAlign: "center", backgroundColor: '#1F67B9', color: "white" }}><i className="fa-solid fa-font "></i > Nombre Insumo</th>

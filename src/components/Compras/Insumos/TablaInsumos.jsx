@@ -417,7 +417,7 @@ function Insumos() {
     
     <button
         style={{ color: "white" }}
-        className={`boton ${estilos.vinotinto}`}
+        className={` ${estilos.vinotinto}`}
         onClick={generarPDF}
     >
         <i className="fa-solid fa-download"></i>

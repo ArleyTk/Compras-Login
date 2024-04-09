@@ -192,11 +192,11 @@ function Usuarios() {
                     } else {
                         // Mostrar alerta de error si falla la eliminación
                         const errorData = await response.json(); // Parsear el cuerpo de la respuesta como JSON
-                        console.error('Error al crear el usuario:', errorData.message);
+                        console.error('Error al eliminar el usuario:', errorData.msg);
                         Swal.fire({
                             icon: 'error',
-                            title: 'Error al crear el usuario',
-                            text: errorData.message
+                            title: 'Error al eliminar el usuario',
+                            text: errorData.msg
                         });
                     }
                 } catch (error) {

@@ -91,13 +91,6 @@ function Acceso() {
     // Si el usuario no está autenticado, muestra la página de acceso
     return (
         <div>
-            <div className="barraPrincipal">
-                <div className="contenedor_1">
-                    <img src="/archivos/imagenes/LuchoGod.png" height="45px" length="45px" alt="Logo" />
-                    <p id="luchosoft">LuchoSoft</p>
-                </div>
-            </div>
-
             <div className={estilos["contenido"]}>
                 <center>
 

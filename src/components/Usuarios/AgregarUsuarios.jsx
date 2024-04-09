@@ -61,43 +61,136 @@ function AgregarUsuarios() {
 
         console.log(usuario)
 
-        try {
-            const response = await fetch('http://localhost:8082/configuracion/usuarios', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(usuario)
-            });
-
-            if (response.ok) {
-                console.log('Usuario creado exitosamente.');
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Usuario creado exitosamente',
-                    showConfirmButton: false,
-                    timer: 1500
+        if (usuario.id_usuario.length == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de identificación esta vacío.",
+            })
+        }
+        else if (usuario.id_usuario.length < 5) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de identificación debe tener 5 o más carácteres.",
+            })
+        }
+        else if (usuario.nombre_usuario.length == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de nombre esta vacío.",
+            })
+        }
+        else if (usuario.nombre_usuario.length < 5) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de nombre debe tener 5 o más carácteres.",
+            })
+        }
+        else if (usuario.telefono_usuario.length == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de teléfono esta vacío.",
+            })
+        }
+        else if (usuario.telefono_usuario.length < 7) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de teléfono debe tener 7 o más carácteres.",
+            })
+        }
+        else if (usuario.direccion_usuario.length == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de dirección esta vacío.",
+            })
+        }
+        else if (usuario.direccion_usuario.length < 7) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de dirección debe tener 7 o más carácteres.",
+            })
+        }
+        else if (usuario.email.length == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de email esta vacío.",
+            })
+        }
+        else if (usuario.email.length < 5) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de email debe tener 5 o más carácteres.",
+            })
+        }
+        else if (usuario.contraseña.length == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de contraseña esta vacío.",
+            })
+        }
+        else if (usuario.contraseña.length < 8) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "La contraseña debe tener 8 o más carácteres.",
+            })
+        }
+        else if (usuario.id_rol == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Debes seleccionar un rol.",
+            })
+        }
+        else {
+            try {
+                const response = await fetch('http://localhost:8082/configuracion/usuarios', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(usuario)
                 });
-                setTimeout(() => {
-                    setRedirect(true);
-                }, 1000);
-                // Aquí podrías redirigir a otra página, mostrar un mensaje de éxito, etc.
-            } else {
-                const errorData = await response.json(); // Parsear el cuerpo de la respuesta como JSON
-                console.error('Error al crear el usuario:', errorData.message);
+
+                if (response.ok) {
+                    console.log('Usuario creado exitosamente.');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Usuario creado exitosamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    setTimeout(() => {
+                        setRedirect(true);
+                    }, 1000);
+                    // Aquí podrías redirigir a otra página, mostrar un mensaje de éxito, etc.
+                } else {
+                    const errorData = await response.json(); // Parsear el cuerpo de la respuesta como JSON
+                    console.error('Error al crear el usuario:', errorData.msg);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error al crear el usuario',
+                        text: errorData.msg,
+                    });
+                }
+            } catch (error) {
+                console.error('Error al crear el usuario:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error al crear el usuario',
-                    text: errorData.message,
+                    text: error.msg
                 });
             }
-        } catch (error) {
-            console.error('Error al crear el usuario:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error al crear el usuario',
-                text: error.message
-            });
         }
     };
 
@@ -132,7 +225,7 @@ function AgregarUsuarios() {
                                     <div className={estilos["formulario__grupo-input"]}>
                                         <input
                                             className={estilos["input-field2"]}
-                                            type="text"
+                                            type="number"
                                             name="id_usuario"
                                             id={estilos.id_usuario}
                                             value={usuario.id_usuario}
@@ -225,7 +318,7 @@ function AgregarUsuarios() {
                                             value={usuario.id_rol}
                                             onChange={handleChange}
                                         >
-                                            <option>Seleccione un rol</option>
+                                            <option value={0}>Seleccione un rol</option>
                                             {roles.map(rol => {
                                                 if (rol.estado_rol != false) {
                                                     return <option value={rol.id_rol}>{rol.nombre_rol}</option>
@@ -241,7 +334,7 @@ function AgregarUsuarios() {
                                 <div className={`${estilos.divImagen} `} >
                                     <p>URL Imagen</p>
                                     <img id={estilos.imagen}
-                                        src={usuario.imagen_usuario ? usuario.imagen_usuario : 'https://tse2.mm.bing.net/th?id=OIP.U8HnwxkbTkhoZ_DTf7sCSgHaHa&pid=Api&P=0&h=180'}/>
+                                        src={usuario.imagen_usuario ? usuario.imagen_usuario : 'https://tse2.mm.bing.net/th?id=OIP.U8HnwxkbTkhoZ_DTf7sCSgHaHa&pid=Api&P=0&h=180'} />
                                     <div>
                                         <input
                                             id={estilos.imagen_usuario}

@@ -31,7 +31,17 @@ const Dashboard = () => {
 
     console.log(usuario)
 
-    if (usuario.contraseñaAntigua != usuarioLS.contraseña) {
+    console.log('longitud contraseña: ', usuario.contraseña.length)
+
+    if (usuario.contraseña.length < 8) {
+      Swal.fire({
+        icon: 'error',
+        title: 'La contraseña debe tener mínimo 8 caracteres.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+    else if (usuario.contraseñaAntigua != usuarioLS.contraseña) {
       Swal.fire({
         icon: 'error',
         title: 'Contraseña incorrecta',
@@ -187,7 +197,7 @@ const Dashboard = () => {
               <div className={estilos["input-group"]}>
                 <label for="contrasenaAntigua">Contraseña antigua</label>
                 <input
-                className={estilos["inputs"]}
+                  className={estilos["inputs"]}
                   required
                   type="password"
                   id={estilos.contrasenaAntigua}
@@ -199,7 +209,7 @@ const Dashboard = () => {
                 <br />
                 <label for="contrasenaNueva">Contraseña nueva</label>
                 <input
-                className={estilos["inputs"]}
+                  className={estilos["inputs"]}
                   required
                   type="password"
                   id={estilos.contrasenaNueva}
@@ -224,7 +234,13 @@ const Dashboard = () => {
               <br />
               <div className={estilos["cajaBotones"]}>
                 <button className={estilos["azul"]} type="submit">Guardar</button>
-                <button className={estilos["gris"]} type="button" onClick={() => cambiarEstadoModalActContraseña(!estadoModalActContraseña)}>Cancelar</button>
+                <button className={estilos["gris"]} type="button" onClick={() => {
+                  cambiarEstadoModalActContraseña(!estadoModalActContraseña), setUsuario({
+                    contraseñaAntigua: '',
+                    contraseña: '',
+                    confirmacionContraseña: ''
+                  })
+                }}>Cancelar</button>
               </div>
             </form>
           </div>

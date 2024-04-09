@@ -171,80 +171,95 @@ function Roles() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        try {
-            console.log('rol a enviar: ', roles1)
+        if (roles1.nombre_rol.length == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de nombre esta vacío.",
+            })
+        } else if (roles1.descripcion_rol.length == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de descripción rol esta vacío.",
+            })
+        }
+        else {
+            try {
+                console.log('rol a enviar: ', roles1)
 
-            // Enviar los datos del rol
-            const responseRoles = await fetch('http://localhost:8082/configuracion/roles', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(roles1)
-            });
+                // Enviar los datos del rol
+                const responseRoles = await fetch('http://localhost:8082/configuracion/roles', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(roles1)
+                });
 
-            if (responseRoles.ok) {
-                const compraData = await responseRoles.json();
-                const id_rol = compraData.id_rol;
+                if (responseRoles.ok) {
+                    const compraData = await responseRoles.json();
+                    const id_rol = compraData.id_rol;
 
-                console.log('Rol creado exitosamente. su id es: ', id_rol);
+                    console.log('Rol creado exitosamente. su id es: ', id_rol);
 
-                // Iterar sobre los permisos seleccionados y enviar los detalles a la API de la tabla de detalle
-                selectedPermisos.forEach(async (id_permiso) => {
+                    // Iterar sobre los permisos seleccionados y enviar los detalles a la API de la tabla de detalle
+                    selectedPermisos.forEach(async (id_permiso) => {
 
-                    console.log('permiso selecionado: ', id_permiso, 'rol: ', id_rol)
-                    const detallePayload = {
-                        fecha_roles_permisos: '2023-09-22',
-                        id_rol: id_rol,
-                        id_permiso: id_permiso
-                    };
+                        console.log('permiso selecionado: ', id_permiso, 'rol: ', id_rol)
+                        const detallePayload = {
+                            fecha_roles_permisos: '2023-09-22',
+                            id_rol: id_rol,
+                            id_permiso: id_permiso
+                        };
 
-                    try {
-                        const responseDetalle = await fetch('http://localhost:8082/configuracion/roles_permisos', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(detallePayload)
-                        });
+                        try {
+                            const responseDetalle = await fetch('http://localhost:8082/configuracion/roles_permisos', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(detallePayload)
+                            });
 
-                        if (!responseDetalle.ok) {
-                            console.error('Error al enviar el detalle del permiso:', responseDetalle.statusText);
-                        } else {
-                            console.log('Detalle enviado con exito')
+                            if (!responseDetalle.ok) {
+                                console.error('Error al enviar el detalle del permiso:', responseDetalle.statusText);
+                            } else {
+                                console.log('Detalle enviado con exito')
+                            }
+                        } catch (error) {
+                            console.error('Error al enviar el detalle del permiso:', error);
                         }
-                    } catch (error) {
-                        console.error('Error al enviar el detalle del permiso:', error);
-                    }
-                });
+                    });
 
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Registro exitoso',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                fetchRoles();
-                fetchRolesPermisos();
-                setSelectedPermisos([]);
-                setRoles1({
-                    nombre_rol: '',
-                    descripcion_rol: '',
-                    estado_rol: 1
-                });
-                cambiarEstadoModalAgregar(false);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registro exitoso',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    fetchRoles();
+                    fetchRolesPermisos();
+                    setSelectedPermisos([]);
+                    setRoles1({
+                        nombre_rol: '',
+                        descripcion_rol: '',
+                        estado_rol: 1
+                    });
+                    cambiarEstadoModalAgregar(false);
 
-                // Resto del código si es necesario
-            } else {
-                console.error('Error al crear el rol:', responseRoles.statusText);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Error al crear el rol',
-                });
+                    // Resto del código si es necesario
+                } else {
+                    console.error('Error al crear el rol:', responseRoles.statusText);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al crear el rol',
+                    });
+                }
+            } catch (error) {
+                console.error('Error al crear el rol:', error);
             }
-        } catch (error) {
-            console.error('Error al crear el rol:', error);
         }
     };
 
@@ -311,11 +326,11 @@ function Roles() {
                         fetchRoles();
                     } else {
                         const errorData = await response.json(); // Parsear el cuerpo de la respuesta como JSON
-                        console.error('Error al eliminar el rol:', errorData.message);
+                        console.error('Error al eliminar el rol:', errorData.msg);
                         Swal.fire({
                             icon: 'error',
                             title: `Error al eliminar el rol`,
-                            text: errorData.message, // Mostrar el mensaje de error recibido desde la API
+                            text: errorData.msg, // Mostrar el mensaje de error recibido desde la API
                             showConfirmButton: false,
                             timer: 1500
                         });
@@ -364,11 +379,11 @@ function Roles() {
                         fetchRolesPermisos();
                     } else {
                         const errorData = await response.json(); // Parsear el cuerpo de la respuesta como JSON
-                        console.error('Error al eliminar la aisgnación del permiso:', errorData.message);
+                        console.error('Error al eliminar la aisgnación del permiso:', errorData.msg);
                         Swal.fire({
                             icon: 'error',
                             title: `Error al eliminar la aisgnación del permiso`,
-                            text: errorData.message, // Mostrar el mensaje de error recibido desde la API
+                            text: errorData.msg, // Mostrar el mensaje de error recibido desde la API
                             showConfirmButton: false,
                             timer: 1500
                         });
@@ -486,59 +501,72 @@ function Roles() {
     const handleSubmitEditar = async (event) => {
         event.preventDefault();
 
-        console.log(roles)
-
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: '¿Deseas actualizar la información del rol?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, actualizar',
-            cancelButtonText: 'Cancelar'
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    const response = await fetch(`http://localhost:8082/configuracion/roles/${rolesEditar.id_rol}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(rolesEditar)
-                    });
-
-                    if (response.ok) {
-                        console.log('rol actualizado exitosamente.');
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'rol actualizado exitosamente',
-                            showConfirmButton: false,
-                            timer: 1500
+        if (rolesEditar.nombre_rol.length == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de nombre esta vacío.",
+            })
+        } else if (rolesEditar.descripcion_rol.length == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "El campo de descripción rol esta vacío.",
+            })
+        }
+        else {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Deseas actualizar la información del rol?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, actualizar',
+                cancelButtonText: 'Cancelar'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const response = await fetch(`http://localhost:8082/configuracion/roles/${rolesEditar.id_rol}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(rolesEditar)
                         });
-                        setTimeout(() => {
-                            fetchRoles();
-                            cambiarEstadoModalEditar(false);
-                        }, 2000);
-                        // Aquí podrías redirigir a otra página, mostrar un mensaje de éxito, etc.
-                    } else {
-                        console.error('Error al actualizar el rol:', response.statusText);
+
+                        if (response.ok) {
+                            console.log('rol actualizado exitosamente.');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'rol actualizado exitosamente',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            setTimeout(() => {
+                                fetchRoles();
+                                cambiarEstadoModalEditar(false);
+                            }, 2000);
+                            // Aquí podrías redirigir a otra página, mostrar un mensaje de éxito, etc.
+                        } else {
+                            console.error('Error al actualizar el rol:', response.statusText);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Error al actualizar el rol',
+                            });
+                        }
+                    } catch (error) {
+                        console.error('Error al actualizar el rol:', error);
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
                             text: 'Error al actualizar el rol',
                         });
                     }
-                } catch (error) {
-                    console.error('Error al actualizar el rol:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Error al actualizar el rol',
-                    });
                 }
-            }
-        });
+            });
+        }
     };
 
     if (isLoading) {
