@@ -133,6 +133,8 @@ const Layout = () => {
             <div className="contenedor">
                 <div className="barraLateral">
                     <div className="sidebar">
+                        <br />
+                   
                         {permisoRoles && ( // Mostrar el módulo de configuración solo si el permiso uno está presente
                             <div className="module">
                                 <p className={`module-heading ${selectedModule === "Configuración" ? "selected" : ""}`} onClick={() => handleModuleClick("Configuración")}>

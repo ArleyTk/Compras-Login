@@ -29,7 +29,7 @@ body{
 .barraPrincipal {
   display: flex;
   justify-content: space-between;
-  background-color: #4e54c8;  
+  background-color: #212233;  
   color: rgb(255, 255, 255);
   border-right: 1;
 
@@ -44,7 +44,7 @@ body{
   flex: 2;
   padding: 10px;
   height: 91vh;
-  background-color: rgb(61, 69, 156); /* Nuevo color de fondo para la barra lateral */
+  background-color: rgb(43, 46, 71); /* Nuevo color de fondo para la barra lateral */
   border-right: 1px solid #6d6d6d; /* Borde derecho */
 
 }
@@ -56,7 +56,7 @@ body{
   padding: 20px;
   color: rgb(0, 0, 0);
   border-left: 1px solid #6d6d6d;
-  background-color: white;
+  background-color: rgb(240, 240, 240);
 }
 
 /*Menu------------------------------------------------------------------------------------------------------------------*/
@@ -73,16 +73,16 @@ body{
 .module-heading {
   padding: 10px;
   cursor: pointer;
-  background-color: #6571b7; /* Color de fondo */
+  background-color: #434865; /* Color de fondo */
   color: #fff; /* Color del texto */
-  border-radius: 5px; /* Bordes redondeados */
+  border-radius: 50px; /* Bordes redondeados */
   font-size: 16px; /* Tamaño de fuente */
 }
 
 
 .module-heading:hover,
 .module-heading.selected {
-  background-color: #5460a8; /* Color de fondo al pasar el mouse o seleccionado */
+  background-color: #40455e; /* Color de fondo al pasar el mouse o seleccionado */
 }
 .options {
   list-style: none;
@@ -97,9 +97,9 @@ body{
 
 .options li {
   padding: 8px 15px;
-  background-color: #6571b7; /* Color de fondo */
+  background-color: #434969; /* Color de fondo */
   color: #fff; /* Color del texto */
-  border-radius: 5px; /* Bordes redondeados */
+  border-radius: 50px; /* Bordes redondeados */
   margin-bottom: 5px; /* Espacio entre elementos */
   cursor: pointer;
   transition: background-color 0.3s; /* Transición suave */
@@ -107,7 +107,7 @@ body{
 
 .options li:hover,
 .options li.selected {
-  background-color: #5460a8; /* Color de fondo al pasar el mouse o seleccionado */
+  background-color: #40455e;
 }
 
 .usuario-link img {
@@ -149,7 +149,7 @@ a {
 .boton {
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   font-size: 16px;
   cursor: pointer;
 }
@@ -175,6 +175,10 @@ a {
 
 .iconosAzules {
   color: #1F67B9;
+}
+
+.iconosGris {
+  color: #a3a3a3;
 }
 
 

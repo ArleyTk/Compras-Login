@@ -62,7 +62,9 @@ function App() {
       const response = await fetch('http://localhost:8082/compras/insumos');
       if (response.ok) {
         const data = await response.json();
-        const insumosConSeleccion = data.map(insumo => ({ ...insumo, seleccionado: false, cantidad: 0, precio_unitario: 0 }));
+        const insumosConEstado1 = data.filter(insumo => insumo.estado_insumo === 1);
+
+        const insumosConSeleccion = insumosConEstado1.map(insumo => ({ ...insumo, seleccionado: false, cantidad: 0, precio_unitario: 0 }));
         setInsumos(insumosConSeleccion);
       } else {
         console.error('Error al obtener los insumos');
@@ -71,6 +73,7 @@ function App() {
       console.error('Error al obtener los insumos:', error);
     }
   };
+  
 
 
 
@@ -79,7 +82,9 @@ function App() {
       const response = await fetch('http://localhost:8082/compras/proveedores');
       if (response.ok) {
         const data = await response.json();
-        setProveedores(data);
+        // Filtrar los proveedores con estado 1
+        const proveedoresConEstado1 = data.filter(proveedor => proveedor.estado_proveedor === 1);
+        setProveedores(proveedoresConEstado1);
       } else {
         console.error('Error al obtener los proveedores');
       }
@@ -87,6 +92,7 @@ function App() {
       console.error('Error al obtener los proveedores:', error);
     }
   };
+  
   
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -381,29 +387,38 @@ function App() {
                 </tr>
               </thead>
               <tbody>
-                {tableRows.map((row, index) => (
-                  <tr key={index}>
-                    <td style={{ textAlign: "center" }}>
-                      <select className={estilos.inputfieldtabla}  value={row.nombre} onChange={(e) => handleSelectChange(e, index)}>
-                        <option value="">Seleccione un insumo</option>
-                        {filteredInsumos.map((insumo) => (
-                          <option key={insumo.id_insumo} value={insumo.nombre_insumo}>
-                            {insumo.nombre_insumo}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td  style={{ textAlign: "center" }}><input className={estilos.inputfieldtabla} style={{ width: "100px" }} type="number" onChange={(e) => handlePrecioChange(e, index)} /></td>
-                    <td style={{ textAlign: "center" }}><input className={estilos.inputfieldtabla} style={{ width: "100px" }} type="number" onChange={(e) => handleCantidadChange(e, index)} /></td>
-                    {index !== 0 && (
-                    <td style={{ textAlign: "center" }}>
-                    <button className={estilos.botx} type="button" onClick={() => handleDeleteRow(index)}>X</button>
-                  </td>
-                  
-                    )}
-                  </tr>
-                ))}
-              </tbody>
+  {tableRows.map((row, index) => (
+    <tr key={index}>
+      <td style={{ textAlign: "center" }}>
+        <select className={estilos.inputfieldtabla}  value={row.nombre} onChange={(e) => handleSelectChange(e, index)}>
+          <option value="">Seleccione un insumo</option>
+          {filteredInsumos.map((insumo) => (
+            <option key={insumo.id_insumo} value={insumo.nombre_insumo}>
+              {insumo.nombre_insumo}
+            </option>
+          ))}
+        </select>
+      </td>
+      <td  style={{ textAlign: "center" }}>
+        <input className={estilos.inputfieldtabla} style={{ width: "100px" }} type="number" onChange={(e) => handlePrecioChange(e, index)} />
+      </td>
+      <td style={{ textAlign: "center" }}>
+        <input className={estilos.inputfieldtabla} style={{ width: "100px" }} type="number" onChange={(e) => handleCantidadChange(e, index)} />
+      </td>
+      {index !== 0 && (
+        <td style={{ textAlign: "center" }}>
+          <button className={estilos.botx} type="button" onClick={() => handleDeleteRow(index)}>X</button>
+        </td>
+      )}
+      {index === 0 && (
+        <td style={{ textAlign: "center" }}>
+          <p></p>
+        </td>
+      )}
+    </tr>
+  ))}
+</tbody>
+
             </table>
           </div>
         </div>
