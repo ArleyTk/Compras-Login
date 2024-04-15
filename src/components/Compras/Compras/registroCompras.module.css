@@ -33,6 +33,11 @@
   justify-content: center;
 }
 
+.error {
+  display: flex;
+  position:fixed
+}
+
 .tabladetalle {
 
   border: 3px solid rgb(228, 228, 228);
@@ -110,6 +115,13 @@
   
 }
 
+/* 
+.inputfield3:focus {
+  border: 1px solid #ccc; 
+  outline: none;
+}
+ */
+
 .inputfield4 {
   padding: 0px;
  
@@ -124,6 +136,9 @@
  
  
 }
+
+
+
 
 
 
@@ -162,6 +177,11 @@
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
+
+/* .inputInvalido {
+  border: 1px solid red;
+  background-color: #f5c1c1;
+} */
 
 #titulo {
   color: rgb(0, 0, 0);

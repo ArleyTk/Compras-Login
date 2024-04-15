@@ -215,7 +215,7 @@ function Compras() {
             cell: (row) => (
                 <div className={estilos["acciones"]}>
                     <button className={estilos.boton} onClick={() => handleMostrarDetalles(row.id_compra)} style={{ cursor: 'pointer', textAlign: 'center', fontSize: '25px' }}>
-                        <i className="bi bi-info-circle" style={{ color: "#1F67B9" }}></i>
+                        <i className="bi bi-info-circle" style={{ color: "#FFA200" }}></i>
                     </button>
                 </div>
             )
