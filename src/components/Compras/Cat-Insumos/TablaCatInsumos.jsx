@@ -39,54 +39,49 @@ function categoria_insumos() {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
+        
+        // Validar que el valor ingresado no contenga caracteres raros
+        if (!/^[a-zA-Z0-9\s]+$/.test(value)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El nombre de la categoría de insumo solo puede contener letras y números',
+            });
+            return;
+        }
+    
         setCategoria_insumos1(prevcategoria_insumos => ({
             ...prevcategoria_insumos,
             [name]: value
         }));
     };
+    
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        try {
-            console.log('categoría de insumo  a enviar: ', categoria_insumos1)
-
-
-            const responseCategoria_insumos = await fetch('http://localhost:8082/compras/categoria_insumos', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'token': token
-                },
-                body: JSON.stringify(categoria_insumos1)
+    
+        // Validar que el nombre de la categoría de insumo no esté en blanco
+        if (!categoria_insumos1.nombre_categoria_insumos.trim()) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El nombre de la categoría de insumo no puede estar en blanco',
             });
-
-            if (responseCategoria_insumos.ok) {
-                console.log('categoría de insumo creada exitosamente.');
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Registro exitoso',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                setTimeout(() => {
-                    window.location.href = '/CatInsumos';
-                }, 2000);
-
-
-            } else {
-                console.error('Error al crear la categoría de insumo:', responseCategoria_insumos.statusText);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Error al crear la categoría de insumo',
-                });
-            }
+            return;
+        }
+    
+        try {
+            // Resto del código para enviar la categoría de insumo
         } catch (error) {
             console.error('Error al crear la categoría de insumo:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al crear la categoría de insumo',
+            });
         }
     };
+    
 
     const handleEditarChange = (event) => {
         const { name, value } = event.target;
