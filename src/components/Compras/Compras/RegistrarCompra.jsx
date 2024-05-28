@@ -28,7 +28,8 @@ function App() {
   const [scrollEnabled, setScrollEnabled] = useState(false);
   const [selectedInsumos, setSelectedInsumos] = useState(new Set());
   const [formChanged, setFormChanged] = useState(false);
-  // const [inputValido, setInputValido] = useState(true);
+  // ARLEYGOD
+  const [inputValido, setInputValido] = useState(true);
   const [inputValido2, setInputValido2] = useState(Array(tableRows.length).fill(true));
 
 
@@ -62,7 +63,7 @@ function App() {
 
   const fetchInsumos = async () => {
     try {
-      const response = await fetch('http://localhost:8082/compras/insumos');
+      const response = await fetch('https://api-luchosoft-mysql.onrender.com/compras/insumos');
       if (response.ok) {
         const data = await response.json();
         const insumosConEstado1 = data.filter(insumo => insumo.estado_insumo === 1);
@@ -82,7 +83,7 @@ function App() {
 
   const fetchProveedores = async () => {
     try {
-      const response = await fetch('http://localhost:8082/compras/proveedores');
+      const response = await fetch('https://api-luchosoft-mysql.onrender.com/compras/proveedores');
       if (response.ok) {
         const data = await response.json();
         // Filtrar los proveedores con estado 1
@@ -99,13 +100,14 @@ function App() {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    // if (name === 'numero_compra') {
-    //   if (value.length > 5) {
-    //     setInputValido(false);
-    //   } else {
-    //     setInputValido(true);
-    //   }
-    // }
+    // ARLEYGOD
+    if (name === 'numero_compra') {
+      if (value.length > 5) {
+        setInputValido(false);
+      } else {
+        setInputValido(true);
+      }
+    }
     setCompra({ ...compra, [name]: value });
     setFormChanged(true);
   };
@@ -209,16 +211,17 @@ function App() {
       return;
     }
 
-    // if (!inputValido) {
-    //   // Verifica si el input es válido o si hay campos vacíos
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Error',
-    //     text: 'El número de compra no puede tener más de 5 números',
-    //     confirmButtonColor: '#1F67B9',
-    //   });
-    //   return;
-    // }
+    if (!inputValido) {
+      // ARLEYGOD
+      // Verifica si el input es válido o si hay campos vacíos
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'El número de compra no puede tener más de 5 números',
+        confirmButtonColor: '#1F67B9',
+      });
+      return;
+    }
     if (!inputValido2.every(valido => valido)) {
       // Verifica si el input es válido o si hay campos vacíos
       Swal.fire({
@@ -239,7 +242,7 @@ function App() {
       try {
         const totalCompra = tableRows.reduce((total, row) => total + parseFloat(row.precio_total || 0), 0);
 
-        const responseCompra = await fetch('http://localhost:8082/compras/compras', {
+        const responseCompra = await fetch('https://api-luchosoft-mysql.onrender.com/compras/compras', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -274,7 +277,7 @@ function App() {
           };
 
           try {
-            const responseComprasInsumos = await fetch('http://localhost:8082/compras/compras_insumos', {
+            const responseComprasInsumos = await fetch('https://api-luchosoft-mysql.onrender.com/compras/compras_insumos', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -387,8 +390,8 @@ function App() {
                 <input
                   id="numeroCompra"
                   name="numero_compra"
-                  className={`${estilos.inputfield3} 
-                 `}
+                  className={`${estilos.inputfield3} ${!inputValido ? estilos.inputInvalido : ''}`}
+                 
                   value={compra.numero_compra}
                   onChange={handleInputChange}
                   minLength={1}
@@ -397,7 +400,8 @@ function App() {
                   placeholder="000"
                   style={{ marginLeft: "30px" }}
                 />
-                {/* {!inputValido && <p className='error' style={{ color: 'red', fontSize: '10px', position: 'absolute', marginLeft: '27px' }}>Máximo 5 números</p>} */}
+                {/* ARLEYGOD */}
+                 {!inputValido && <p className='error' style={{ color: 'red', fontSize: '10px', position: 'absolute', marginLeft: '27px' }}>Máximo 5 números</p>}
               </div>
             </div>
             <br />

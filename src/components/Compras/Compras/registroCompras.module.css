@@ -177,11 +177,11 @@
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
-
-/* .inputInvalido {
+/* ARLEYGO */
+.inputInvalido {
   border: 1px solid red;
-  background-color: #f5c1c1;
-} */
+  /* background-color: #f5c1c1; */
+}
 
 #titulo {
   color: rgb(0, 0, 0);
